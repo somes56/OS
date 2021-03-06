@@ -1,0 +1,62 @@
+﻿@model OS.ViewModels.LoginUsr
+
+@{
+    Layout = "~/Views/Shared/_LayoutNoNav.cshtml";
+    ViewBag.Title = "OS Log In";
+}
+
+@section Scripts{
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/OSScripts/Login.js")"></script>
+}
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Open Short Analysis System - Login</h3>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="panel-body">
+                <div class="col-md-8">
+                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        if (ViewBag.SysBadMsg != "" && ViewBag.SysBadMsg != null)
+                        {
+                            <div class="alert alert-danger"><strong> Invalid Login ID or Password.</strong></div>
+                        }
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LoginID, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(m => m.LoginID, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LoginID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LoginPsswrd, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-5">
+                                @Html.PasswordFor(m => m.LoginPsswrd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LoginPsswrd, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-3">
+                                <input type="submit" value="Log In" class="btn btn-success">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

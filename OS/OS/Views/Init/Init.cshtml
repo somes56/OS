@@ -1,0 +1,891 @@
+﻿@model OS.ViewModels.OSInit
+
+@{
+    ViewBag.Title = "Init";
+}
+
+@section Scripts{
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/OSScripts/Init.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/OSScripts/AdvSearch.js")"></script>
+}
+
+<h2>OS Registration</h2>
+<hr />
+
+@using (Html.BeginForm("Init", "Init", FormMethod.Post, new { id = "Init" }))
+{
+    <div id="SysStatusDesc" class="alert alert-info"><strong><span id="SysStatusDesc">@Model.os_Main.StatusDesc</span></strong></div>
+
+    if (ViewBag.SysGoodMsg != "" && ViewBag.SysGoodMsg != null)
+    {
+        <div id="SysGoodMsg" class="alert alert-success"><strong>@ViewBag.SysGoodMsg</strong></div>
+    }
+
+    if (ViewBag.SysBadMsg != "" && ViewBag.SysBadMsg != null)
+    {
+        <div id="SysBagMsg" class="alert alert-danger"><strong>@ViewBag.SysBadMsg</strong></div>
+    }
+
+    <div id="ClientVerifyBlock" class="alert alert-danger"><strong><span id="ClientVerifyMsg"></span></strong></div>
+
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">OS No :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_Main.OSNo, new { @class = "form-control input-sm", @readonly = "readonly", id = "OSNo" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchOSNo" onclick="SearchOS();"></span>
+                        </span>
+                    </div>
+                </div>
+                <label class="col-md-2 control-label">Lot ID :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_LotStatusDetails.LotID, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotID" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Base Product Name :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.BaseProductName, new { @class = "form-control input-sm", @readonly = "readonly", id = "BaseProductName" })
+                </div>
+                <label class="col-md-2 control-label">Package :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.PkgDesc, new { @class = "form-control input-sm", @readonly = "readonly", id = "PkgDesc" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Category :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.LotCat, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotCat" })
+                </div>
+                <label class="col-md-2 control-label">Lot Quantity :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.LotQty, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotQty" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Issued By :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.IssueByEmpName, new { @class = "form-control input-sm", @readonly = "readonly", id = "IssueByEmpName" })
+                </div>
+                <label class="col-md-2 control-label">Date Issue :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_Main.IssueDate, new { @class = "form-control input-sm", @readonly = "readonly", id = "IssueDate" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">ABL No :</label>
+            </div>
+        </div>
+
+        <div class="row">
+            @Html.HiddenFor(m => m.os_Main.PkgID, new { id = "PkgID" })
+            @Html.HiddenFor(m => m.os_Main.IssueByEmpNo, new { id = "IssueByEmpNo" })
+            @Html.HiddenFor(m => m.os_Main.LotNo, new { id = "LotNo" })
+            @Html.HiddenFor(m => m.os_Main.ProdRank, new { id = "ProdRank" })
+            @Html.HiddenFor(m => m.os_LotStatusDetails.StepCode, new { id = "StepCode" })
+            @Html.HiddenFor(m => m.os_ManualAnalysis.DefectID, new { id = "CADefectID" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID1, new { id = "XADefectID1" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID2, new { id = "XADefectID2" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID3, new { id = "XADefectID3" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID4, new { id = "XADefectID4" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID5, new { id = "XADefectID5" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID6, new { id = "XADefectID6" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID1, new { id = "AADefectID1" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID2, new { id = "AADefectID2" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID3, new { id = "AADefectID3" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID4, new { id = "AADefectID4" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID5, new { id = "AADefectID5" })
+            @Html.HiddenFor(m => m.os_AppAnalysis.DefectID6, new { id = "AADefectID6" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID1, new { id = "SADefectID1" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID2, new { id = "SADefectID2" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID3, new { id = "SADefectID3" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID4, new { id = "SADefectID4" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID5, new { id = "SADefectID5" })
+            @Html.HiddenFor(m => m.os_SemAnalysis.DefectID6, new { id = "SADefectID6" })
+            @Html.HiddenFor(m => m.os_ManualAnalysis.CAStatus, new { id = "CAStatus" })
+            @Html.HiddenFor(m => m.os_XrayAnalysis.XAStatus, new { id = "XAStatus" })
+            @Html.HiddenFor(m => m.os_Main.BinJudge, new { id = "BinJudge" })
+            @Html.HiddenFor(m => m.os_Main.CtmJudge, new { id = "CtmJudge" })
+            @Html.HiddenFor(m => m.os_Main.XrayJudge, new { id = "XrayJudge" })
+            @Html.HiddenFor(m => m.os_Main.AppJudge, new { id = "AppJudge" })
+            @Html.HiddenFor(m => m.os_Main.SemJudge, new { id = "SemJudge" })
+            @Html.HiddenFor(m => m.os_Main.OverAllJudge, new { id = "OverAllJudge" })
+            @Html.HiddenFor(m => m.os_Main.StatusCode, new { id = "StatusCode" })
+            @Html.HiddenFor(m => m.os_Main.StatusDesc, new { id = "StatusDesc" })
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Open/Short Failure (0,1) Judgement</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Bin 2 :</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SpcBin.Bin2, new { @class = "form-control input-sm", @readonly = "readonly", id = "Bin2" })
+                </div>
+                <label class="col-md-2 control-label">Bin 7 :</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SpcBin.Bin7, new { @class = "form-control input-sm", @readonly = "readonly", id = "Bin7" })
+                </div>
+                <label class="col-md-2 control-label">Bin 8 :</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SpcBin.Bin8, new { @class = "form-control input-sm", @readonly = "readonly", id = "Bin8" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Judgement :</label>
+                <div class="col-md-2">
+                    <div id="lblBinOK" class="label label-success" style="font-size:x-large"><span>OK</span></div>
+                    <div id="lblBinNG" class="label label-danger" style="font-size:x-large"><span>NG</span></div>
+                </div>
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="form-inline">
+                        <input type="checkbox" class="checkbox" id="ChkSB" />&nbsp; Complete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Lot Judgement :</label>
+                <div class="col-md-6">
+                    <div id="lblLotFlow" class="label label-success" style="font-size:x-large"><span>Flow The Lot</span></div>
+                    <div id="lblLotHold" class="label label-danger" style="font-size:x-large"><span>Send Defect For OS</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Curve Tracer/Manual Test</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Total Test Defect :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_SpcBin.TtlDefQty, new { @class = "form-control input-sm", @readonly = "readonly", id = "TtlDefQty" })
+                </div>
+                <label class="col-md-2 control-label">Defect :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_ManualAnalysis.DefectDesc, new { @class = "form-control input-sm", @readonly = "readonly", id = "CADefectDesc" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchCADefect" onclick="SearchDefect('CA', 'CADefectID', 'CADefectDesc');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.DefectQty, new { @class = "form-control input-sm", id = "CADefectQty" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Pass Qty :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.PassQty, new { @class = "form-control input-sm", id = "PassQty" })
+                </div>
+                <label class="col-md-2 control-label">Remarks :</label>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(m => m.os_ManualAnalysis.Remark, new { @class = "form-control input-sm", id = "CARemark" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Open Qty :</label>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.OpenQty, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "OpenQty" })
+                </div>
+                <label class="col-md-2 control-label">Short Qty :</label>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.ShortQty, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "ShortQty" })
+                </div>
+                <label class="col-md-2 control-label">Total Open Short :</label>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.TtlAlyQty, new { @class = "form-control input-sm", @readonly = "readonly", id = "TtlAlyQty" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Judgement :</label>
+                <div class="col-md-2">
+                    <div id="lblCAOK" class="label label-success" style="font-size:x-large"><span>OK</span></div>
+                    <div id="lblCANG" class="label label-danger" style="font-size:x-large"><span>NG</span></div>
+                </div>
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="form-inline">
+                        <input type="checkbox" class="checkbox" id="ChkCA" onclick="return CAComplete();" />&nbsp;Complete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Completion History :</label>
+                <div class="col-md-4">
+                    <div id="lblCACmpltHist" class="label label-default" style="font-size:x-small"><span>@Model.os_ManualAnalysis.CompleteBy @Convert.ToDateTime(@Model.os_ManualAnalysis.DateComplete).ToString("dd-MM-yyyy HH:mm")</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>X-Ray</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Total Open Short :</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.os_ManualAnalysis.TtlAlyQty, new { @class = "form-control input-sm", @readonly = "readonly", id = "TtlOSQty" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 1 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc1, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc1" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect1" onclick="SearchDefect('XA', 'XADefectID1', 'XADefectDesc1');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty1, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty1" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc1, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc1" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 2 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc2, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc2" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect2" onclick="SearchDefect('XA', 'XADefectID2', 'XADefectDesc2');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty2, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty2" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc2, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc2" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 3 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc3, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc3" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect3" onclick="SearchDefect('XA', 'XADefectID3', 'XADefectDesc3');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty3, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty3" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc3, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc3" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 4 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc4, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc4" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect4" onclick="SearchDefect('XA', 'XADefectID4', 'XADefectDesc4');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty4, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty4" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc4, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc4" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 5 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc5, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc5" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect5" onclick="SearchDefect('XA', 'XADefectID5', 'XADefectDesc5');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty5, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty5" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc5, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc5" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 6 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectDesc6, new { @class = "form-control input-sm", @readonly = "readonly", id = "XADefectDesc6" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchXADefect6" onclick="SearchDefect('XA', 'XADefectID6', 'XADefectDesc6');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectQty6, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "XADefectQty6" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_XrayAnalysis.DefectEtc6, new { @class = "form-control input-sm", @placeholder = "Details", id = "XADefectEtc6" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Judgement :</label>
+                <div class="col-md-2">
+                    <div id="lblXAOK" class="label label-success" style="font-size:x-large"><span>OK</span></div>
+                    <div id="lblXANG" class="label label-danger" style="font-size:x-large"><span>NG</span></div>
+                </div>
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="form-inline">
+                        <input type="checkbox" class="checkbox" id="ChkXA" onclick="return XAComplete();" />&nbsp;Complete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Remark :</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.os_XrayAnalysis.Remark, new { @class = "form-control input-sm", id = "XARemark" })
+                </div>
+                <label class="col-md-2 control-label">Completion History :</label>
+                <div class="col-md-4">
+                    <div id="lblXACmpltHist" class="label label-default" style="font-size:x-small"><span>@Model.os_XrayAnalysis.CompleteBy @Convert.ToDateTime(@Model.os_XrayAnalysis.DateComplete).ToString("dd-MM-yyyy HH:mm")</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-10">
+                <label class="btn btn-primary">&hellip;Browse<input type="file" id="XAFileUpload" name="XAFileUpload" style="display: none;" multiple></label>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="PartialXARefFile"></div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Mold/Lead Appearance</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 1 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc1, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc1" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect1" onclick="SearchDefect('AA', 'AADefectID1', 'AADefectDesc1');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty1, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty1" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc1, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc1" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 2 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc2, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc2" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect2" onclick="SearchDefect('AA', 'AADefectID2', 'AADefectDesc2');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty2, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty2" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc2, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc2" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 3 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc3, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc3" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect3" onclick="SearchDefect('AA', 'AADefectID3', 'AADefectDesc3');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty3, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty3" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc3, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc3" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 4 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc4, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc4" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect4" onclick="SearchDefect('AA', 'AADefectID4', 'AADefectDesc4');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty4, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty4" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc4, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc4" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 5 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc5, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc5" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect5" onclick="SearchDefect('AA', 'AADefectID5', 'AADefectDesc5');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty5, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty5" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc5, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc5" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 6 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_AppAnalysis.DefectDesc6, new { @class = "form-control input-sm", @readonly = "readonly", id = "AADefectDesc6" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchAADefect6" onclick="SearchDefect('AA', 'AADefectID6', 'AADefectDesc6');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectQty6, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "AADefectQty6" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_AppAnalysis.DefectEtc6, new { @class = "form-control input-sm", @placeholder = "Details", id = "AADefectEtc6" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Judgement :</label>
+                <div class="col-md-2">
+                    <div id="lblAAOK" class="label label-success" style="font-size:x-large"><span>OK</span></div>
+                    <div id="lblAANG" class="label label-danger" style="font-size:x-large"><span>NG</span></div>
+                </div>
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="form-inline">
+                        <input type="checkbox" class="checkbox" id="ChkAA" onclick="return AAComplete();" />&nbsp;Complete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Remark :</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.os_AppAnalysis.Remark, new { @class = "form-control input-sm", id = "XARemark" })
+                </div>
+                <label class="col-md-2 control-label">Completion History :</label>
+                <div class="col-md-4">
+                    <div id="lblAACmpltHist" class="label label-default" style="font-size:x-small"><span>@Model.os_AppAnalysis.CompleteBy @Convert.ToDateTime(@Model.os_AppAnalysis.DateComplete).ToString("dd-MM-yyyy HH:mm")</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-10">
+                <label class="btn btn-primary">&hellip;Browse<input type="file" id="AAFileUpload" name="AAFileUpload" style="display: none;" multiple></label>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="PartialAARefFile"></div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Sem</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 1 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc1, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc1" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect1" onclick="SearchDefect('SA', 'SADefectID1', 'SADefectDesc1');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty1, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty1" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc1, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc1" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 2 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc2, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc2" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect2" onclick="SearchDefect('SA', 'SADefectID2', 'SADefectDesc2');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty2, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty2" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc2, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc2" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 3 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc3, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc3" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect3" onclick="SearchDefect('SA', 'SADefectID3', 'SADefectDesc3');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty3, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty3" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc3, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc3" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 4 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc4, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc4" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect4" onclick="SearchDefect('SA', 'SADefectID4', 'SADefectDesc4');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty4, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty4" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc4, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc4" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 5 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc5, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc5" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect5" onclick="SearchDefect('SA', 'SADefectID5', 'SADefectDesc5');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty5, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty5" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc5, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc5" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Defect 6 :</label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.os_SemAnalysis.DefectDesc6, new { @class = "form-control input-sm", @readonly = "readonly", id = "SADefectDesc6" })
+                        <span class="input-group-addon input-sm">
+                            <span class="glyphicon glyphicon-search" id="btnSearchSADefect6" onclick="SearchDefect('SA', 'SADefectID6', 'SADefectDesc6');"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectQty6, new { @class = "form-control input-sm", onkeypress = "return Numbers();", id = "SADefectQty6" })
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.os_SemAnalysis.DefectEtc6, new { @class = "form-control input-sm", @placeholder = "Details", id = "SADefectEtc6" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Judgement :</label>
+                <div class="col-md-2">
+                    <div id="lblSAOK" class="label label-success" style="font-size:x-large"><span>OK</span></div>
+                    <div id="lblSANG" class="label label-danger" style="font-size:x-large"><span>NG</span></div>
+                </div>
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="form-inline">
+                        <input type="checkbox" class="checkbox" id="ChkSA" />&nbsp;Complete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Remark :</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.os_SemAnalysis.Remark, new { @class = "form-control input-sm", id = "SARemark" })
+                </div>
+                <label class="col-md-2 control-label">Completion History :</label>
+                <div class="col-md-4">
+                    <div id="lblSACmpltHist" class="label label-default" style="font-size:x-small"><span>@Model.os_SemAnalysis.CompleteBy @Convert.ToDateTime(@Model.os_SemAnalysis.DateComplete).ToString("dd-MM-yyyy HH:mm")</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-10">
+                <label class="btn btn-primary">&hellip;Browse<input type="file" id="SAFileUpload" name="SAFileUpload" style="display: none;" multiple></label>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="PartialSARefFile"></div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Results</h2>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Bin :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.BinJudge, "NA", new { @class = "radio-inline", id = "RbSBNA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.BinJudge, "OK", new { @class = "radio-inline", id = "RbSBOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.BinJudge, "NG", new { @class = "radio-inline", id = "RbSBNG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Curve Trace/Manual :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.CtmJudge, "NA", new { @class = "radio-inline", id = "RbCANA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.CtmJudge, "OK", new { @class = "radio-inline", id = "RbCAOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.CtmJudge, "NG", new { @class = "radio-inline", id = "RbCANG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">X-Ray :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.XrayJudge, "NA", new { @class = "radio-inline", id = "RbXANA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.XrayJudge, "OK", new { @class = "radio-inline", id = "RbXAOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.XrayJudge, "NG", new { @class = "radio-inline", id = "RbXANG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Mold/Apperance :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.AppJudge, "NA", new { @class = "radio-inline", id = "RbAANA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.AppJudge, "OK", new { @class = "radio-inline", id = "RbAAOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.AppJudge, "NG", new { @class = "radio-inline", id = "RbAANG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Sem :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.SemJudge, "NA", new { @class = "radio-inline", id = "RbSANA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.SemJudge, "OK", new { @class = "radio-inline", id = "RbSAOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.SemJudge, "NG", new { @class = "radio-inline", id = "RbSANG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Over All :</label>
+                <div class="form-inline">
+                    @Html.RadioButtonFor(m => m.os_Main.OverAllJudge, "NA", new { @class = "radio-inline", id = "RbOANA" }) NA
+                    @Html.RadioButtonFor(m => m.os_Main.OverAllJudge, "OK", new { @class = "radio-inline", id = "RbOAOK" }) OK
+                    @Html.RadioButtonFor(m => m.os_Main.OverAllJudge, "NG", new { @class = "radio-inline", id = "RbOANG" }) NG
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Over All Remark :</label>
+                <div class="col-md-5">
+                    @Html.TextAreaFor(m => m.os_Main.OverAllRemark, new { @class = "form-control input-sm", @rows = "5", id = "OverAllRemark" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-5 col-md-offset-5">
+                    <button type="button" id="Print" class="btn btn-info">Print</button>
+                    <span>&nbsp;</span>
+                    <button type="submit" id="Save" class="btn btn-success" onclick="return SubmitValidation();">Save</button>
+                    <span>&nbsp;</span>
+                    <button type="reset" id="Reset" class="btn btn-danger" onclick="ResetForm();">Reset</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@Html.Partial("PartialAdvSearchModal")

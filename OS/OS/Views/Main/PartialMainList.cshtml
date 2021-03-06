@@ -1,0 +1,61 @@
+﻿@model IList<OS.ViewModels.MainList>
+
+@{
+    Layout = "";
+}
+
+@{ int RowNo = 0; }
+
+<div style="width:2000px">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Lot Receive</th>
+                <th>Action</th>
+                <th>OS No</th>
+                <th>Lot ID</th>
+                <th>Status</th>
+                <th>Issue Date</th>
+                <th>Lead Time</th>
+                <th>Test Category</th>
+                <th>Lot Receive History</th>
+                <th>ABL Nos</th>
+                <th>ABL Defects</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                RowNo = RowNo + 1;
+                
+
+            <tr>
+                <td>@RowNo</td>
+                <td>
+                    @if (item.LotRcv == true)
+                    {
+                        <input type="checkbox" id="ChkLotRcv_@RowNo" value="@item.OSNo" checked="checked"/>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="ChkLotRcv_@RowNo" value="@item.OSNo"/>
+                    }
+                </td>
+                <td><button class="btn btn-default" onclick="OSGo('@item.OSNo')">Go</button></td>
+                <td>@item.OSNo</td>
+                <td>@item.LotID</td>
+                <td>@item.StatusDesc</td>
+                <td>@item.IssueDate</td>
+                <td>@item.LeadTime</td>
+                <td>@item.TestCat</td>
+                <td>@item.LotRcvHist</td>
+                <td>@item.ABLNo</td>
+                <td>@item.ABLDefect</td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

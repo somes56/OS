@@ -1,0 +1,157 @@
+﻿@model OS.ViewModels.OSSmmry
+
+@{
+    ViewBag.Title = "OS Summary";
+}
+
+<h2>OSSummary</h2>
+<hr />
+
+@using (Html.BeginForm("OSSmmry", "OSSmmry", FormMethod.Get, new { id = "OSSmmry" }))
+{
+    <div id="SysStatusDesc" class="alert alert-info"><strong><span id="SysStatusDesc">@Model.os_Main.StatusDesc</span></strong></div>
+
+    if (ViewBag.SysGoodMsg != "" && ViewBag.SysGoodMsg != null)
+    {
+        <div id="SysGoodMsg" class="alert alert-success"><strong>@ViewBag.SysGoodMsg</strong></div>
+    }
+
+    if (ViewBag.SysBadMsg != "" && ViewBag.SysBadMsg != null)
+    {
+        <div id="SysBagMsg" class="alert alert-danger"><strong>@ViewBag.SysBadMsg</strong></div>
+    }
+
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">OS No :</label>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.os_Main.OSNo, new { @class = "form-control input-sm", @readonly = "readonly", id = "OSNo" })
+                            <span class="input-group-addon input-sm">
+                                <span class="glyphicon glyphicon-search" id="btnSearchOSNo" onclick=""></span>
+                            </span>
+                        </div>
+                    </div>
+                    <label class="col-md-2 control-label">Lot ID :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_LotStatusDetails.LotID, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotID" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Base Product Name :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.BaseProductName, new { @class = "form-control input-sm", @readonly = "readonly", id = "BaseProductName" })
+                    </div>
+                    <label class="col-md-2 control-label">Package :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.PkgDesc, new { @class = "form-control input-sm", @readonly = "readonly", id = "PkgDesc" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Category :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.LotCat, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotCat" })
+                    </div>
+                    <label class="col-md-2 control-label">Lot Quantity :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.LotQty, new { @class = "form-control input-sm", @readonly = "readonly", id = "LotQty" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Issued By :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.IssueByEmpName, new { @class = "form-control input-sm", @readonly = "readonly", id = "IssueByEmpName" })
+                    </div>
+                    <label class="col-md-2 control-label">Date Issue :</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.os_Main.IssueDate, "{0:dd/MM/yyyy HH:mm:ss}", new { @class = "form-control input-sm", @readonly = "readonly", id = "IssueDate" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">ABL No :</label>
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.HiddenFor(m => m.os_Main.PkgID, new { id = "PkgID" })
+                @Html.HiddenFor(m => m.os_Main.IssueByEmpNo, new { id = "IssueByEmpNo" })
+                @Html.HiddenFor(m => m.os_Main.LotNo, new { id = "LotNo" })
+                @Html.HiddenFor(m => m.os_Main.ProdRank, new { id = "ProdRank" })
+                @Html.HiddenFor(m => m.os_LotStatusDetails.StepCode, new { id = "StepCode" })
+                @Html.HiddenFor(m => m.os_ManualAnalysis.DefectID, new { id = "CADefectID" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID1, new { id = "XADefectID1" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID2, new { id = "XADefectID2" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID3, new { id = "XADefectID3" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID4, new { id = "XADefectID4" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID5, new { id = "XADefectID5" })
+                @Html.HiddenFor(m => m.os_XrayAnalysis.DefectID6, new { id = "XADefectID6" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID1, new { id = "AADefectID1" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID2, new { id = "AADefectID2" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID3, new { id = "AADefectID3" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID4, new { id = "AADefectID4" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID5, new { id = "AADefectID5" })
+                @Html.HiddenFor(m => m.os_AppAnalysis.DefectID6, new { id = "AADefectID6" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID1, new { id = "SADefectID1" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID2, new { id = "SADefectID2" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID3, new { id = "SADefectID3" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID4, new { id = "SADefectID4" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID5, new { id = "SADefectID5" })
+                @Html.HiddenFor(m => m.os_SemAnalysis.DefectID6, new { id = "SADefectID6" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Lot Materials</h2>
+                </div>
+            </div>
+            <hr/>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Die :</label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.os_LotMatDetail.DieName, new { @class = "form-control input-sm", @readonly = "readonly", id = "DieName" })
+                    </div>
+                    <label class="col-md-2 control-label">Ag Paste :</label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.os_LotMatDetail.AgName, new { @class = "form-control input-sm", @readonly = "readonly", id = "AgPaste" })
+                    </div>
+                    <label class="col-md-2 control-label">Lead Frame :</label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.os_LotMatDetail.LeadFName, new { @class = "form-control input-sm", @readonly = "readonly", id = "LeadFName" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Resin :</label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.os_LotMatDetail.RsnName, new { @class = "form-control input-sm", @readonly = "readonly", id = "RsnName" })
+                    </div>
+                    <label class="col-md-2 control-label">Bond Tape :</label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.os_LotMatDetail.BndTapeName, new { @class = "form-control input-sm", @readonly = "readonly", id = "BndTapeName" })
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+}
+

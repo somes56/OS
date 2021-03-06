@@ -1,0 +1,30 @@
+﻿@model IEnumerable<OS.ViewModels.OSLot>
+
+@{
+    Layout = "";
+}
+
+<table class="table">
+    <tr>
+        <th style="width:25%">OSNo</th>
+        <th style="width:15%">LotID</th>
+        <th style="width:15%">Issue Date</th>
+        <th style="width:5%">Issued StepCode</th>
+        <th style="width:15%">Status</th>
+        <th style="width:15%"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modalItem => item.OSNo)</td>
+            <td>@Html.DisplayFor(modalItem => item.LotID)</td>
+            <td>@Html.DisplayFor(modalItem => item.IssueDate)</td>
+            <td>@Html.DisplayFor(modalItem => item.StepCode)</td>
+            <td>@Html.DisplayFor(modalItem => item.StatusDesc)</td>
+            <td><button type="button" onclick="AdvSearchSelOne('@item.OSNo');">select</button></td>
+        </tr>
+    }
+
+
+</table>

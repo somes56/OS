@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+}
+
+@section Scripts{
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/OSScripts/MainList.js")"></script>
+
+}
+
+
+
+<h2>Main</h2>
+
+<div id="MainListLoading" style="display:none">
+    <img id="img-spinner" src="@Url.Content("~/Content/Images/ajax-aerospinner.gif")" alt="Loading..." />
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div id="PartialMainList"></div>
+
+<div class="row">&nbsp;</div>
+
+<div>
+    <button type="button" id="BtnLotRcv" class="btn btn-primary" onclick="LotReceive();">Receive</button>
+</div>

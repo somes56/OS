@@ -1,0 +1,97 @@
+﻿@using OS.ViewModels
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <title>@ViewBag.Title - OS</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @{
+
+        LoginUsr User = (LoginUsr)HttpContext.Current.Session["LoginUsr"];
+
+        if (User != null)
+        {
+            ViewBag.UserName = User.UsrName;
+        }
+        else
+        {
+            ViewBag.UserName = "NA";
+        }
+
+    }
+
+</head>
+<body>
+
+    <input type="hidden" name="RootURL" id="RootURL" value="@Url.Content("~/")" />
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">OPEN SHORT ANALYSIS</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Main", "Main", "Main")</li>
+                    <li>@Html.ActionLink("Registration", "Init", "Init")</li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Rpt<b class="caret"></b></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>@Html.ActionLink("OS Summary", "OSSmmry", "OSSmmry")</li>
+                            <li>@Html.ActionLink("Ouick Search", "", "")</li>
+                            <li>@Html.ActionLink("OS Status Summary", "", "")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Maint<b class="caret"></b></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>@Html.ActionLink("MD Hold Release", "", "")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Lot Location", "", "")</li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">@ViewBag.UserName<b class="caret"></b></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="~/Login/Logout">Logout</a></li>
+                            @*<li>@Html.ActionLink("Log Out", "Logout", "Login")</li>*@
+                            @*
+                                1) Using <a>
+                                2) Using ActionLink
+                            *@
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - OS RSKL BUILD 20190521.0000 (DEPLOY01)</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
